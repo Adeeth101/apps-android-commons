@@ -483,14 +483,16 @@ public class MainActivity extends BaseActivity
     }
 
     /**
-     * Load default language in onCreate from SharedPreferences
+     * Reads the currently language on the UI and sets the setting language (default language section)
      */
     private void loadLocale() {
+        androidx.compose.ui.text.intl.Locale current = androidx.compose.ui.text.intl.Locale.Companion.getCurrent();
         final SharedPreferences preferences = getSharedPreferences("Settings",
             Activity.MODE_PRIVATE);
         final String language = preferences.getString("language", "");
+        java.util.Locale settingLanguage = SettingsFragment.createLocale(language);
         final SettingsFragment settingsFragment = new SettingsFragment();
-        settingsFragment.setLocale(this, language);
+        settingsFragment.setLocale(this, current.toString());
     }
 
     public NavTabLayout.OnNavigationItemSelectedListener getNavListener() {
