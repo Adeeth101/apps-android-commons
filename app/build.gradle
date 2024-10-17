@@ -387,6 +387,11 @@ android {
         abortOnError false
         disable 'MissingTranslation', 'ExtraTranslation'
     }
+
+    androidResources {
+        //Enable automatic generation of LocaleConfig files to support system-level per-app language settings
+        generateLocaleConfig = true
+    }
 }
 
 String getTestUserName() {
