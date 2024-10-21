@@ -94,7 +94,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private View separator;
     private ListView languageHistoryListView;
     private static final String GET_CONTENT_PICKER_HELP_URL = "https://commons-app.github.io/docs.html#get-content";
-    private ActivityResultLauncher<String[]> inAppCameraLocationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
+    private ActivityResultLauncher<String[]>
+        inAppCameraLocationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
+        new ActivityResultCallback<Map<String, Boolean>>() {
         @Override
         public void onActivityResult(Map<String, Boolean> result) {
             boolean areAllGranted = true;
@@ -116,6 +118,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         // Set the preferences from an XML resource
         setPreferencesFromResource(R.xml.preferences, rootKey);
+
+        System.out.println("Locale");
+        System.out.println(Locale.getDefault().getLanguage());
 
         themeListPreference = findPreference(Prefs.KEY_THEME_VALUE);
         prepareTheme();
@@ -154,6 +159,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             // If current language code is empty, means none selected by user yet so use phone local
             appUiLanguageListPreference.setSummary(Locale.getDefault().getDisplayLanguage());
         } else {
+            if(!languageCode.equals(Locale.getDefault().getLanguage())){
+                languageCode = Locale.getDefault().getLanguage();
+                saveLanguageValue(languageCode, "appUiDefaultLanguagePref");
+            }
             // If any language is selected by user previously, use it
             Locale defLocale = createLocale(languageCode);
             appUiLanguageListPreference.setSummary((defLocale).getDisplayLanguage(defLocale));
@@ -193,7 +202,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         keyLanguageListPreference = descriptionSecondaryLanguageListPreference.getKey();
         languageCode = getCurrentLanguageCode(keyLanguageListPreference);
         assert languageCode != null;
-        descriptionSecondaryLanguageListPreference.setSummary("List additional languages.");
 
         descriptionSecondaryLanguageListPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
             @Override
