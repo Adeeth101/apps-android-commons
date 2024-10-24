@@ -331,8 +331,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         HashMap<Integer, String> selectedLanguages = new HashMap<>();
         assert languageCode != null;
         selectedLanguages.put(0, Locale.getDefault().getLanguage());
-        System.out.println(Locale.getDefault().getLanguage());
-        System.out.println(languageCode);
 
         // Deserializing saved language codes to Language objects
         ArrayList<Language> savedLanguages = new ArrayList<>();
